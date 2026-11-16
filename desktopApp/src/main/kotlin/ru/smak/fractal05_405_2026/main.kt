@@ -14,7 +14,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "Fractal05-405-2026",
     ) {
-        val nMax = 100
+        val nMax = 200
         val rSquared = 4.0
         val fractal: AlgebraicFractal = remember { Mandelbrot(nMax, rSquared) }
         val painter = remember { ComposableFractalPainter(fractal) }

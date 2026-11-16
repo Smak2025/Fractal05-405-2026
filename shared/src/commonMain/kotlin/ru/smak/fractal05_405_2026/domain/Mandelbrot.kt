@@ -5,14 +5,14 @@ class Mandelbrot(
     val rSquared: Double = 4.0,
 ) : AlgebraicFractal {
 
-    override fun isInSet(c: Complex): Boolean {
+    override fun isInSet(c: Complex): Float {
         val z = Complex()
         for (i in 1..nMax) {
             z *= z
             z += c
-            if (z.modulusSquared >= rSquared) return false
+            if (z.modulusSquared >= rSquared) return (i-1).toFloat()/nMax
         }
-        return true
+        return 1f
     }
 
 }
