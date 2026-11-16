@@ -40,9 +40,12 @@ fun App(
             }
             .onPointerEvent(PointerEventType.Release) {
                 viewModel.showSelection = false
+                viewModel.clearSelection()
             }
             .onPointerEvent(PointerEventType.Move){
-                viewModel.addSelectionPoint(it.changes.first().position)
+                if (viewModel.showSelection) {
+                    viewModel.addSelectionPoint(it.changes.first().position)
+                }
             }
         ){
             painter.drawScope = this

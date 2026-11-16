@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntSize
 import androidx.lifecycle.ViewModel
+import ru.smak.fractal05_405_2026.application.Converter
 import ru.smak.fractal05_405_2026.domain.AlgebraicFractal
 import ru.smak.fractal05_405_2026.domain.Plane
 import ru.smak.fractal05_405_2026.ui.rendering.Rect
@@ -21,7 +22,7 @@ class MainViewModel: ViewModel() {
 
     var showSelection by mutableStateOf(false)
 
-    val selectionRect by mutableStateOf(Rect())
+    var selectionRect by mutableStateOf(Rect())
 
     fun onCanvasSizeChange(size: IntSize) {
         if (size.width <= 0 || size.height <= 0) return
@@ -29,6 +30,20 @@ class MainViewModel: ViewModel() {
     }
 
     fun addSelectionPoint(point: Offset) {
-        selectionRect.addPoint(point)
+        selectionRect = selectionRect.addPoint(point)
+    }
+
+    fun clearSelection() {
+        if (selectionRect.isDefined) {
+            val xMin = Converter.xScrToCrt(selectionRect.topLeft!!.x, plane)
+            val yMax = Converter.yScrToCrt(selectionRect.topLeft!!.y, plane)
+            val xMax = Converter.xScrToCrt(selectionRect.bottomRight!!.x, plane)
+            val yMin = Converter.yScrToCrt(selectionRect.bottomRight!!.y, plane)
+
+            plane = plane.copy(xMin, xMax, yMin, yMax)
+
+        }
+
+        selectionRect = selectionRect.clear()
     }
 }
